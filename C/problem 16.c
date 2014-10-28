@@ -36,6 +36,7 @@ int main()
     return 0;
 }
 
+/*运算超时，检测较小数值可以通过
 unsigned long long select(int a, int b)
 {
     unsigned long long r;
@@ -48,7 +49,7 @@ unsigned long long select(int a, int b)
         r = select( a, b-1 )+select( a-1, b-1 );
     }
         return r;
-}
+}*/
 /*第5组出错（溢出？）
 unsigned long long select(int a, int b)
 {
