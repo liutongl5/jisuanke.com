@@ -23,7 +23,7 @@ int main()
 {
     int n;
     scanf("%d", &n);
-    /*n = 4;*/
+    
     
     unsigned long long result = 1;
     
@@ -35,16 +35,17 @@ int main()
     printf("%llu", result);
     return 0;
 }
+
 unsigned long long select(int a, int b)
 {
     unsigned long long r;
     if (a == 0)
         return 1;
-    else if (a == 1)
+    else if (b == 0)
         return b;
     else
     {
-        r = (select( (a-1), (b-1) )+select( (a-1), (b) ) );
+        r = select( a, b-1 )+select( a-1, b-1 );
     }
         return r;
 }
