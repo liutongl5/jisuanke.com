@@ -36,6 +36,31 @@ int main()
     return 0;
 }
 
+unsigned long long select(int a, int b)
+{
+    int i, j=1;
+    unsigned long long r = 1;
+    for (i = (b-a+1); i <= b; i++)
+    {
+        r *= i;
+        if (j<a)
+        {
+            r /= j;
+            j++;
+        }
+    }
+    
+    for (; j <= a; j++)
+    {
+        r /= j;
+    }
+    
+    return r;
+}
+/*此方法同乘同除，既避免overflow又避免运算超时*/
+
+
+
 /*运算超时，检测较小数值可以通过
 unsigned long long select(int a, int b)
 {
