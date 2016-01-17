@@ -1,0 +1,83 @@
+#include <iostream>
+#include <cmath>
+#include <cstdio>
+using namespace std;
+
+class Heap {
+private:
+    double *data;
+public:
+    int size;
+    Heap(int _maxSize) {
+        data = new double[ _maxSize ];
+        size = 0;
+    }
+    
+    ~Heap() {
+        delete[] data;
+    }
+    
+    int top() {
+        return data[0];
+    }
+    
+    void push(double value) {
+        data[size] = value;
+        int current = size;
+        int father = ( current - 1 ) / 2;
+        while ( data[current] > data[father] ) {
+            swap( data[current], data[father] );
+            current = father;
+            father = ( current - 1 ) / 2;
+        }
+        size++;
+    }
+    
+    void update(int pos) {
+        int lchild = pos * 2 + 1;
+        int rchild = pos * 2 + 2;
+        if (rchild > size-1) {
+            return ;
+        }
+        
+        int maxValPos = (data[lchild] > data[rchild]) ? lchild : rchild;
+        
+        if (data[pos] < data[maxValPos]) {
+            swap( data[pos], data[maxValPos] );
+            update( maxValPos );
+        }
+        
+        return ;
+    }
+    
+    void pop() {
+        swap(data[0], data[--size]);
+        update(0);
+    }
+};
+
+int main() {
+    int N;
+    double mass;
+    long double ans;
+    Heap heap(1000);
+    cin >> N;
+    
+    for (int i=0; i<N; i++) {
+        cin >> mass;
+        heap.push( mass );
+    }
+    
+    ans = float( heap.top() );
+    heap.pop();
+    
+    while (heap.size > 0) {
+        ans = (long double)(pow( ( ans * pow( heap.top() , 2.0) ), (long double)(1.0/3.0) ) );
+        heap.pop();
+    }
+    
+    //cout << ans << endl;
+    printf("%.12Lf", ans);
+    
+    return 0;
+}
