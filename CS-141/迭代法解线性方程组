@@ -1,0 +1,40 @@
+import sys
+
+A = [ [] for i in range(3) ]
+for i in xrange(3):
+    a = raw_input().split()
+    
+    for j in xrange( len(a) ):
+        A[i].append( float( a[j] ) )
+    
+        
+kxy = -A[0][1] / A[0][0]
+kxz = -A[0][2] / A[0][0]
+kxd = -A[0][3] / A[0][0]
+
+kyx = -A[1][0] / A[1][1]
+kyz = -A[1][2] / A[1][1]
+kyd = -A[1][3] / A[1][1]
+
+kzx = -A[2][0] / A[2][2]
+kzy = -A[2][1] / A[2][2]
+kzd = -A[2][3] / A[2][2]
+
+x = [0.0, 10.0]
+y = [0.0, 10.0]
+z = [0.0, 10.0]
+
+
+while ( (x[0] - x[1] > 10 ** (-5) or x[0] - x[1] < -10 ** (-5) ) and
+        (y[0] - y[1] > 10 ** (-5) or y[0] - y[1] < -10 ** (-5) ) and
+        (z[0] - z[1] > 10 ** (-5) or z[0] - z[1] < -10 ** (-5) )
+      ) :
+    x[1], y[1], z[1] = x[0], y[0], z[0]
+    
+    x[0] = float (kxy * y[1] + kxz * z[1] + kxd)
+    y[0] = float (kyx * x[1] + kyz * z[1] + kyd)
+    z[0] = float (kzx * x[1] + kzy * y[1] + kzd)
+    
+print -x[0]
+print -y[0]
+print -z[0]
